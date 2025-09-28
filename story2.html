@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dharovar - Explore by State</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .main-content-area {
+            height: calc(100vh - 80px);
+            /* Adjusted for header without nav */
+        }
+
+        /* Style for the favorited heart icon */
+        .favorited svg {
+            fill: #ef4444;
+            /* red-500 */
+            stroke: #ef4444;
+            /* red-500 */
+            color: #ef4444;
+        }
+
+        body {
+            background: #f5f6fa;
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 18px;
+            min-height: 100vh;
+            box-shadow: 0 6px 24px rgba(58, 63, 75, 0.12);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 22px 0 22px;
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            color: #4231b3;
+            font-weight: 800;
+            letter-spacing: 1px;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+
+        .header-icons {
+            font-size: 1.5rem;
+            color: #39338e;
+            cursor: pointer;
+        }
+
+        .story-tabs {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 20px 10px 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 8px 6px;
+            border-radius: 11px;
+            font-size: 15px;
+            background-color: #f1f7ff;
+            color: #4231b3;
+            border: none;
+            margin-right: 7px;
+            font-family: inherit;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.25s;
+        }
+
+        .tab-btn.active {
+            background: #4231b3;
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 1px 4px rgba(65, 49, 179, 0.08);
+        }
+
+        .tab-btn:last-child {
+            margin-right: 0;
+        }
+
+        .page-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            padding: 0 22px 4px 22px;
+            color: #322b6a;
+        }
+
+        .search-box {
+            margin: 0 22px 18px 22px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 13px;
+            border: 1.5px solid #e2e7fa;
+            font-size: 1rem;
+            background: #f1f7ff;
+            color: #4231b3;
+        }
+
+        .stories-scroll {
+            max-height: 66vh;
+            overflow-y: auto;
+            padding: 0 18px 80px 18px;
+        }
+
+        .story-card {
+            display: flex;
+            background: #f9fbff;
+            border-radius: 16px;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 13px;
+            box-shadow: 0 2px 9px rgba(110, 110, 170, 0.07);
+        }
+
+        .story-thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 13px;
+            object-fit: cover;
+            margin-right: 15px;
+            background: #e2e2fa;
+        }
+
+        .story-content {
+            flex: 1;
+        }
+
+        .story-title {
+            font-size: 1.08rem;
+            color: #39338e;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .story-desc {
+            font-size: 0.93rem;
+            color: #6359cc;
+            margin-bottom: 7px;
+        }
+
+        .read-more-btn {
+            background: #4231b3;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            padding: 7px 15px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .fab {
+            position: fixed;
+            bottom: 22px;
+            right: calc(50vw - 45px);
+            background: #4231b3;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            box-shadow: 0 3px 16px rgba(60, 70, 140, 0.19);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            cursor: pointer;
+        }
+
+        .fab-icon {
+            font-size: 2rem;
+            color: #fff;
+        }
+
+        .stories-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Modal styling */
+        .modal-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(56, 58, 100, 0.28);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-bg.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #fff;
+            border-radius: 16px;
+            max-width: 90vw;
+            width: 350px;
+            padding: 22px 20px 18px 20px;
+            box-shadow: 0 2px 16px rgba(42, 31, 140, 0.13);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            animation: modalfade 0.22s;
+        }
+
+        @keyframes modalfade {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-thumb {
+            width: 84px;
+            height: 84px;
+            margin-bottom: 12px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 2px 12px rgba(42, 31, 140, 0.09);
+        }
+
+        .modal-title {
+            font-size: 1.11rem;
+            color: #39338e;
+            font-weight: 700;
+            margin-bottom: 7px;
+            text-align: center;
+        }
+
+        .modal-desc {
+            color: #6359cc;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 12px;
+            top: 8px;
+            font-size: 1.5rem;
+            color: #4231b3;
+            cursor: pointer;
+            font-weight: 700;
+            transition: color 0.15s;
+        }
+
+        .close-modal:hover {
+            color: #322b6a;
+        }
+
+        /* --- Story List --- */
+        .story-list {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding-bottom: 80px;
+            /* Space for FAB */
+        }
+
+        .story-card {
+            background-color: var(--color-light);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            /* Slightly heavier shadow for mobile depth */
+            display: flex;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .card-image {
+            width: 100px;
+            /* Smaller image for mobile */
+            height: 100px;
+            /* Smaller image for mobile */
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .card-content {
+            padding: 12px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 1em;
+            font-weight: bold;
+            color: var(--color-primary);
+            margin: 0 0 4px 0;
+        }
+
+        .card-description {
+            font-size: 0.85em;
+            color: #555;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            /* Limit to 2 lines on smaller screens */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .read-more-btn {
+            align-self: flex-start;
+            background: none;
+            border: none;
+            color: var(--color-accent);
+            font-weight: bold;
+            padding: 0;
+            cursor: pointer;
+            font-size: 0.85em;
+            text-decoration: underline;
+            /* Clearer CTA on mobile */
+        }
+
+        /* --- Filter Tabs (Sticky Below Search) --- */
+        .filter-tabs {
+            display: flex;
+            overflow-x: scroll;
+            /* Enable horizontal scrolling */
+            padding: 10px 15px;
+            gap: 10px;
+            background-color: var(--color-light);
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            box-shadow: 0 1px 3px var(--color-shadow);
+            position: sticky;
+            top: calc(var(--header-height) + var(--search-height));
+            z-index: 8;
+        }
+
+        .filter-tabs::-webkit-scrollbar {
+            display: none;
+            /* Hide scrollbar for cleaner mobile UI */
+        }
+
+        .tab {
+            background-color: var(--color-light);
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: background-color 0.3s, color 0.3s;
+            flex-shrink: 0;
+        }
+
+        .tab.active {
+            background-color: var(--color-accent);
+            color: var(--color-light);
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-200 flex items-center justify-center min-h-screen">
+
+    <div class="w-full max-w-sm bg-white shadow-2xl rounded-lg overflow-hidden">
+        <div class="bg-gray-50 font-sans max-w-sm mx-auto">
+            <header
+                class="flex items-center justify-between p-4 sticky top-0 bg-white/80 backdrop-blur-sm z-10 border-b border-gray-100">
+
+                <img src="dharovar-logo.png" alt="Dharovar Logo" class="h-12 w-auto">
+                <div class="flex items-center space-x-4">
+                    <a href="#"><svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg></a>
+                    <a href="#"><svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg></a>
+                </div>
+            </header>
+            <header
+                class="flex items-center justify-between p-4 sticky top-0 bg-white/80 backdrop-blur-sm z-10 border-b
+                border-gray-100">
+                <a href="dashboard.html" class="text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-6 h-6">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </a>
+                <h1 class="text-xl font-bold text-gray-800">Historical Stories</h1>
+                <div class="w-6"></div> <!-- Spacer to keep title centered -->
+            </header>
+            <br>
+            <main class="main-content-area overflow-y-auto">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input class="search-input" type="text" placeholder="Search by dynasty, state, or era"
+                        id="story-search">
+                </div>
+                <!-- Tabs -->
+                <div class="filter-tabs">
+                    <button class="tab-btn active" data-category="all">All</button>
+                    <button class="tab-btn" data-category="ancient">Ancient</button>
+                    <button class="tab-btn" data-category="medieval">Medieval</button>
+                    <button class="tab-btn" data-category="modern">Modern</button>
+                    <button class="tab-btn" data-category="folk">Folk Tales</button>
+                </div>
+                <!-- Scrollable stories area -->
+
+
+                <main class="story-list" id="story-list">
+                </main>
+            </main>
+        </div>
+    </div>
+    <script>
+        const storiesData = [
+            {
+                title: "Mauryan Empire",
+                category: "ancient",
+                description: "Explore the vast empire founded by Chandragupta Maurya and its peak under Ashoka's peaceful rule.",
+                image: "https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2153258706/settings_images/4c8453c-6a1b-a8eb-0023-4102d6ca64ab_gXGijj5wQWu11wXedqMT_pasted_image_0_19.png",
+                link: "https://youtu.be/wHNFIGAyU5Y"
+            },
+            {
+                title: "Chola Dynasty's Grandeur",
+                category: "medieval",
+                description: "Discover the naval strength and temple architecture achievements of the Chola Kings in South India.",
+                image: "https://www.cheggindia.com/wp-content/uploads/2023/12/chola-dynasty.png",
+                link: "https://youtu.be/l6fyPpACKP4"
+            },
+            {
+                title: "The Golden Age of Guptas",
+                category: "ancient",
+                description: "The era marked by significant advancements in science, mathematics, art, and Sanskrit literature.",
+                image: "https://tse3.mm.bing.net/th/id/OIP.WseNwjA7gVVPEETV86qYOgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3",
+                link: "https://youtu.be/dt74rNgCtrc"
+            },
+            {
+                title: "Maratha Empire-Swaraj",
+                category: "medieval",
+                description: "The Maratha Empire, established in the 17th century, was a significant power in India, known for its military prowess and resistance against Mughal rule, ultimately shaping the subcontinent's history until its decline in the early 19th century.",
+                image: "https://www.dollsofindia.com/images/p/mobile-2x-large_thumbnails/people-posters/shivaji-GA61.jpg",
+                link: "https://youtu.be/0LvFLwCAgnc"
+            },
+            {
+                title: "Quit India Movement",
+                category: "modern",
+                description: "A pivotal call for independence by Mahatma Gandhi that galvanized the masses against British Rule.",
+                image: "https://www.cheggindia.com/wp-content/uploads/2023/12/quit-india-movement.png",
+                link: "https://youtu.be/VST8kwhfcsw"
+            },
+            {
+                title: "The Legend of Rani Lakshmibai",
+                category: "modern",
+                description: "The inspiring tale of the Queen of Jhansi and her heroic resistance during the Indian Rebellion of 1857.",
+                image: "https://i.pinimg.com/originals/23/c1/46/23c146f1a587358e355c0e793fe0295f.jpg",
+                link: "https://youtu.be/5tsBuaV4PM0"
+            },
+            {
+                title: "The Birth of Ganesha",
+                category: "folk",
+                description: "A popular tale explaining the origin of the elephant-headed god, a central figure in Hindu mythology.",
+                image: "https://i.pinimg.com/736x/b3/ba/f7/b3baf7d912f706f3855c3f65633c755c.jpg",
+                link: "https://youtu.be/-9z5z5S7pak"
+            },
+        ];
+
+        const storyList = document.getElementById('story-list');
+        const filterTabs = document.querySelectorAll('.tab-btn');
+        const searchInput = document.getElementById('story-search');
+
+        function createStoryCard(story) {
+            return `
+                <div class="story-card" data-category="${story.category}">
+                    <img src="${story.image}" alt="${story.title}" class="card-image">
+                    <div class="card-content">
+                        <div>
+                            <h2 class="card-title">${story.title}</h2>
+                            <p class="card-description">${story.description}</p>
+                        </div>
+                        <button class="read-more-btn" onclick="window.location.href='${story.link}'">Read More <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+ * Finds the currently active category tab.
+ * @returns {string} The data-category value of the active tab.
+ */
+        function getCurrentCategory() {
+            const activeTab = document.querySelector('.tab.active');
+            return activeTab ? activeTab.dataset.category : 'all';
+        }
+
+        /**
+         * Renders the stories based on the selected category and search term.
+         * @param {string} category - The category to filter by ('all', 'ancient', etc.).
+         * @param {string} searchTerm - Text to filter by title or description.
+         */
+        function renderStories(category, searchTerm = '') {
+            storyList.innerHTML = ''; // Clear current stories
+            const lowerCaseSearch = searchTerm.toLowerCase();
+
+            const filteredStories = storiesData.filter(story => {
+                const categoryMatch = category === 'all' || story.category === category;
+                const searchMatch = story.title.toLowerCase().includes(lowerCaseSearch) ||
+                    story.description.toLowerCase().includes(lowerCaseSearch);
+
+                return categoryMatch && searchMatch;
+            });
+
+            if (filteredStories.length === 0) {
+                storyList.innerHTML = '<p style="text-align: center; margin-top: 50px; color: #555;">No stories match your criteria.</p>';
+                return;
+            }
+
+            filteredStories.forEach(story => {
+                storyList.innerHTML += createStoryCard(story);
+            });
+        }
+
+        /**
+         * Handles the click event for the filter tabs.
+         * @param {Event} event - The click event object.
+         */
+        function handleFilterClick(event) {
+            const clickedTab = event.target.closest('.tab-btn');
+            if (!clickedTab) return;
+
+            // Remove 'active' class from all tabs
+            filterTabs.forEach(tab => tab.classList.remove('active'));
+
+            // Add 'active' class to the clicked tab
+            clickedTab.classList.add('active');
+
+            const category = clickedTab.dataset.category;
+            const searchTerm = searchInput.value;
+            renderStories(category, searchTerm);
+        }
+
+        /**
+         * Handles the input event for the search bar.
+         */
+        function handleSearchInput() {
+            const category = getCurrentCategory();
+            const searchTerm = searchInput.value;
+            renderStories(category, searchTerm);
+        }
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial render: show all stories
+            renderStories('all');
+
+            // Attach event listeners
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', handleFilterClick);
+            });
+
+            searchInput.addEventListener('input', handleSearchInput);
+
+            // Optional: Alert when FAB is clicked for demonstration
+            document.querySelector('.fab').addEventListener('click', () => {
+                alert('Navigating to Saved Stories... (Functionality to be implemented)');
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const favoriteButtons = document.querySelectorAll('.favorite-btn');
+
+            favoriteButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    // Prevent the click from navigating the parent link
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    // Toggle the 'favorited' class on the button
+                    button.classList.toggle('favorited');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

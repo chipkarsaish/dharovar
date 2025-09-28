@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dharovar - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        /* --- GLOBAL & MOBILE CONTAINER STYLES --- */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .mobile-container {
+            width: 375px;
+            height: 812px;
+            background-color: #f8fafc; /* bg-gray-50 */
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content-area {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .main-content-area::-webkit-scrollbar {
+            display: none;
+        }
+
+        .active-nav {
+            color: #2563EB; /* Calming Blue (text-blue-600) */
+        }
+
+        /* --- CSS FROM PROFILE PAGE --- */
+        .profile-card { background: #fff; margin: 20px; border-radius: 15px; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; }
+        .profile-card img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; }
+        .profile-card h2 { margin-bottom: 5px; font-size: 18px; }
+        .profile-card p { color: #777; font-size: 14px; margin-bottom: 10px; }
+        .edit-btn { padding: 6px 12px; border-radius: 20px; border: 1px solid #D71A28; background: #fff; color: #D71A28; font-size: 14px; cursor: pointer; }
+        .stats-row { display: flex; justify-content: space-around; margin: 0 20px 20px 20px; }
+        .stat-card { background: #fff; flex: 1; margin: 0 5px; padding: 15px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align: center; }
+        .stat-card h3 { color: #D71A28; margin-bottom: 5px; }
+        .stat-card p { font-size: 12px; color: #555; }
+        .menu { margin: 20px; }
+        .menu-item { display: flex; align-items: center; padding: 12px 15px; background: #fff; margin-bottom: 10px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); cursor: pointer; font-size: 16px; }
+        .menu-item span { margin-right: 10px; font-size: 18px; width: 20px; text-align: center; }
+        .community-card { background: #FFF4E1; margin: 20px; padding: 15px; border-radius: 15px; text-align: center; }
+        .community-card button { background: #008000; color: #fff; padding: 8px 16px; border: none; border-radius: 20px; cursor: pointer; margin-top: 10px; }
+        .logout-btn { display: block; width: calc(100% - 40px); margin: 20px auto; padding: 12px; background: #D71A28; color: #fff; border: none; border-radius: 25px; font-size: 16px; cursor: pointer; }
+        
+        /* --- CSS FROM GAMES PAGE --- */
+        #games-page { background-color: #FFFACD; } /* Lemon Chiffon BG */
+        .hero-banner { position: relative; height: 180px; background: linear-gradient(135deg, #FF8C00, #FFD700); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-align: center; padding: 20px; margin-bottom: 15px; }
+        .hero-banner h2 { font-size: 1.6em; margin: 0 0 15px 0; font-weight: 800; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+        .hero-banner .cta-button { background-color: #fff; color: #FF8C00; border: none; padding: 12px 30px; border-radius: 50px; font-size: 1.1em; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .hero-banner .cta-button:active { transform: translateY(2px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
+        .games-content-container { padding: 0 15px 80px 15px; }
+        .games-section-title { font-size: 1.25em; font-weight: bold; color: #363636; margin: 20px 0 15px 0; padding-left: 5px; }
+        .game-categories { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px; }
+        .category-card { background-color: #fff; border-radius: 15px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); text-align: center; transition: transform 0.2s; cursor: pointer; min-height: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .category-card:nth-child(3) { grid-column: span 2; } /* Makes the 3rd item span both columns */
+        .category-card:active { transform: scale(0.98); }
+        .category-card i { font-size: 2.2em; color: #1E90FF; margin-bottom: 10px; }
+        .category-card h3 { font-size: 1em; font-weight: bold; margin: 0 0 5px 0; color: #FF8C00; }
+        .category-card p { font-size: 0.75em; color: #666; margin: 0; line-height: 1.3; }
+        .featured-games { display: flex; overflow-x: scroll; gap: 15px; padding-bottom: 10px; -webkit-overflow-scrolling: touch; }
+        .featured-games::-webkit-scrollbar { display: none; }
+        .game-card { flex-shrink: 0; width: 180px; background-color: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: transform 0.2s; cursor: pointer; }
+        .game-card-content { padding: 10px 12px; text-align: center; }
+        .game-card img { width: 100%; height: 110px; object-fit: cover; display: block; }
+        .game-card h4 { font-size: 1em; margin: 5px 0; color: #363636; font-weight: 600; }
+        .game-card .difficulty-tag { display: inline-block; color: #fff; font-size: 0.7em; padding: 3px 8px; border-radius: 10px; margin-bottom: 8px; font-weight: bold; }
+        .game-card .play-button { background-color: #FF8C00; color: #fff; border: none; width: 100%; padding: 8px 0; border-radius: 50px; font-size: 0.9em; cursor: pointer; font-weight: bold; transition: background-color 0.2s; }
+        .progress-rewards { background-color: #fff; border-radius: 15px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); margin-top: 25px; text-align: center; }
+        .progress-rewards p { font-size: 1em; font-weight: 600; color: #FF8C00; margin-bottom: 15px; }
+        .badges-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .badge { background-color: #FFFACD; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 1.8em; box-shadow: inset 0 0 5px rgba(0,0,0,0.1); border: 2px solid #32CD32; }
+
+        /* --- CSS FROM FESTIVALS PAGE --- */
+        #festivals-page { background: #FFF5E6; }
+        .festivals-header { display: flex; justify-content: center; align-items: center; padding: 15px 20px; background: #FF6F00; color: #fff; font-size: 22px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .festival-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
+        .festival-card { background: linear-gradient(135deg, #FFD700, #FFA500); color: #fff; border-radius: 20px; padding: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.2); display: flex; flex-direction: column; justify-content: space-between; min-height: 150px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .festival-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.25); }
+        .festival-card h4 { font-size: 16px; font-weight: bold; margin-bottom: 5px; text-shadow: 1px 1px rgba(0,0,0,0.2); }
+        .festival-card p { font-size: 12px; line-height: 1.3; flex-grow: 1; text-shadow: 0.5px 0.5px rgba(0,0,0,0.15); }
+        .view-btn { background: #008000; color: #fff; border: none; border-radius: 20px; padding: 6px 10px; font-size: 12px; font-weight: bold; margin-top: 10px; cursor: pointer; }
+        .view-btn:hover { background: #006400; }
+
+    </style>
+</head>
+<body class="bg-gray-200 flex items-center justify-center min-h-screen">
+
+    <div class="mobile-container">
+        
+        <header
+            class="flex items-center justify-between p-4 sticky top-0 bg-white/80 backdrop-blur-sm z-10 border-b border-gray-100 flex-shrink-0">
+            <img src="dharovar-logo.png" alt="Dharovar Logo" class="h-12 w-auto">
+            <div class="flex items-center space-x-4">
+                <a href="#"><svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg></a>
+                <a href="#"><svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg></a>
+            </div>
+        </header>
+
+        <nav class="bg-white border-b border-gray-100 flex justify-around py-3 px-1 flex-shrink-0">
+            <a href="#" data-page="heritage" class="nav-link flex flex-col items-center space-y-1 active-nav"><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg><span class="text-xs font-medium">Heritage</span></a>
+            <a href="#" data-page="marketplace" class="nav-link flex flex-col items-center space-y-1 text-gray-500"><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg><span class="text-xs font-medium">Marketplace</span></a>
+            <a href="#" data-page="festivals" class="nav-link flex flex-col items-center space-y-1 text-gray-500"><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span class="text-xs font-medium">Festivals</span></a>
+            <a href="#" data-page="games" class="nav-link flex flex-col items-center space-y-1 text-gray-500"><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"></line><line x1="8" y1="10" x2="8" y2="14"></line><line x1="15" y1="13" x2="15.01" y2="13"></line><line x1="18" y1="11" x2="18.01" y2="11"></line><rect x="1" y="4" width="22" height="16" rx="2"></rect></svg><span class="text-xs font-medium">Games</span></a>
+            <a href="#" data-page="profile" class="nav-link flex flex-col items-center space-y-1 text-gray-500"><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="8" r="3"></circle><path d="M12 14c-2.76 0-5 1.79-5 4h10c0-2.21-2.24-4-5-4z"></path></svg><span class="text-xs font-medium">Profile</span></a>
+        </nav>
+
+        <!-- Page Content Area -->
+        <div class="main-content-area">
+            <!-- Heritage Page (Visible by default) -->
+            <main id="heritage-page" class="page-content">
+                <div class="p-4">
+                    <a href="#" class="block bg-amber-700/80 rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow">
+                        <h2 class="text-3xl font-bold">Explore Our Community</h2>
+                        <p class="mt-1">Discover and Learn diffrent Cultural Activities in our Country</p>
+                        <div class="inline-block mt-4 px-6 py-2 bg-white text-amber-800 font-semibold rounded-full shadow-md">Explore More</div>
+                    </a>
+                </div>
+                <section>
+                    <div class="flex justify-between items-center px-4 py-2">
+                        <h3 class="text-lg font-bold text-gray-800">Quick Access</h3>
+                        <a href="#" class="text-sm font-semibold text-blue-600">View All</a>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 px-4">
+                        <a href="ExploreByState.html" class="block bg-white rounded-2xl p-4 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow"><div class="p-3 rounded-full bg-blue-100"><svg class="w-7 h-7 text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div><h4 class="font-semibold text-gray-800 mt-3">Explore by State</h4><p class="text-xs text-gray-500 mt-1">Discover heritage sites across India</p></a>
+                        <a href="story2.html" class="block bg-white rounded-2xl p-4 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow"><div class="p-3 rounded-full bg-cyan-100"><svg class="w-7 h-7 text-cyan-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10,9 9,9 8,9"></polyline></svg></div><h4 class="font-semibold text-gray-800 mt-3">Historical Stories</h4><p class="text-xs text-gray-500 mt-1">Hear stories of our Ancient Culture</p></a>
+                        <a href="TryArView.html" class="block bg-white rounded-2xl p-4 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow"><div class="p-3 rounded-full bg-purple-100"><svg class="w-7 h-7 text-purple-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12l-2 2v2a2 2 0 0 0 2 2h2l2-2"></path><path d="M18 12l2 2v2a2 2 0 0 1-2 2h-2l-2-2"></path><path d="M12 2l-2 2v2l2 2v2"></path></svg></div><h4 class="font-semibold text-gray-800 mt-3">Try Sanjivani</h4><p class="text-xs text-gray-500 mt-1">Experience traditional clothing in AR</p></a>
+                        <a href="digitalyatre.html" class="block bg-white rounded-2xl p-4 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow"><div class="p-3 rounded-full bg-sky-100"><svg class="w-7 h-7 text-sky-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12,6 12,12 16,14"></polyline></svg></div><h4 class="font-semibold text-gray-800 mt-3">Digital Yatra</h4><p class="text-xs text-gray-500 mt-1">Explore our Culture right from your Place</p></a>
+                    </div>
+                </section>
+                <div class="p-4">
+                    <a href="#" class="block bg-amber-700/80 rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow">
+                        <h2 class="text-3xl font-bold">Experience our Culture</h2>
+                        <p class="mt-1">Experience our festivals and culture with our people yourself</p>
+                        <div class="inline-block mt-4 px-6 py-2 bg-white text-amber-800 font-semibold rounded-full shadow-md">Start Journey</div>
+                    </a>
+                </div>
+                <section class="mt-6 pb-6">
+                    <div class="flex justify-between items-center px-4 py-2">
+                        <h3 class="text-lg font-bold text-gray-800">Featured Content</h3>
+                    </div>
+                    <div class="px-4 space-y-3">
+                        <a href="#" class="block bg-white rounded-2xl p-3 flex items-center space-x-4 shadow-sm hover:shadow-md transition-shadow"><img src="https://placehold.co/100x100/3B6A7F/FFFFFF?text=Kerala" alt="Kerala Saree" class="w-20 h-20 rounded-xl object-cover" /><div class="flex-1"><h4 class="font-bold text-gray-800">Kerala Saree Collection</h4><p class="text-sm text-gray-500 mt-1">Discover the elegance of traditional Kerala sarees</p><div class="mt-2 flex flex-wrap gap-2"><span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800">Traditional</span><span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-green-100 text-green-800">AR Ready</span></div></div></a>
+                        <a href="#" class="block bg-white rounded-2xl p-3 flex items-center space-x-4 shadow-sm hover:shadow-md transition-shadow"><img src="https://placehold.co/100x100/F4A261/FFFFFF?text=Diwali" alt="Diwali" class="w-20 h-20 rounded-xl object-cover" /><div class="flex-1"><h4 class="font-bold text-gray-800">Diwali Celebrations</h4><p class="text-sm text-gray-500 mt-1">Learn about the festival of lights and its traditions</p><div class="mt-2 flex flex-wrap gap-2"><span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-pink-100 text-pink-800">Festival</span><span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800">Interactive</span></div></div></a>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Marketplace Page (Hidden by default) -->
+            <main id="marketplace-page" class="page-content hidden h-full"><div class="flex items-center justify-center h-full"><div class="text-center text-gray-500"><h2 class="text-2xl font-bold">Marketplace</h2><p class="mt-2">Marketplace content will be here soon!</p></div></div></main>
+            
+            <!-- Festivals Page (Hidden by default) -->
+            <main id="festivals-page" class="page-content hidden">
+                <header class="festivals-header">Upcoming Festivals</header>
+                <div class="festival-grid">
+                    <div class="festival-card">
+                        <h4>Diwali</h4>
+                        <p>Festival of lights celebrated with lamps, sweets, and family gatherings.</p>
+                        <button class="view-btn" onclick="viewFestival('diwali')">View More</button>
+                    </div>
+                    <div class="festival-card">
+                        <h4>Holi</h4>
+                        <p>The vibrant festival of colors welcoming spring with joy and celebrations.</p>
+                        <button class="view-btn" onclick="viewFestival('holi')">View More</button>
+                    </div>
+                    <div class="festival-card">
+                        <h4>Navratri</h4>
+                        <p>Nine nights of devotion and dance in honor of Goddess Durga.</p>
+                        <button class="view-btn" onclick="viewFestival('navratri')">View More</button>
+                    </div>
+                    <div class="festival-card">
+                        <h4>Makar Sankranti</h4>
+                        <p>Harvest festival celebrated with kites, sweets, and rituals across India.</p>
+                        <button class="view-btn" onclick="viewFestival('makar')">View More</button>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Games Page (Hidden by default) -->
+            <main id="games-page" class="page-content hidden">
+                <section class="hero-banner">
+                    <h2>Play & Learn Indian Heritage</h2>
+                    <button class="cta-button">Start Playing</button>
+                </section>
+        
+                <div class="games-content-container">
+                    <section>
+                        <h2 class="games-section-title">Game Categories</h2>
+                        <div class="game-categories" id="game-categories">
+                        </div>
+                    </section>
+                    
+                    <section>
+                        <h2 class="games-section-title">Featured Games</h2>
+                        <div class="featured-games" id="featured-games">
+                        </div>
+                    </section>
+        
+                    <section class="progress-rewards">
+                        <p>You have completed 3/10 levels in Quizzes!</p>
+                        <div class="badges-container">
+                            <div class="badge" title="History Explorer"><i class="fas fa-book-reader"></i></div>
+                            <div class="badge" title="Culture Master"><i class="fas fa-palette"></i></div>
+                            <div class="badge" title="Quiz Whiz"><i class="fas fa-question"></i></div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+            
+            <!-- Profile Page (Hidden by default) -->
+            <main id="profile-page" class="page-content hidden">
+                <div class="profile-card">
+                    <img src="https://via.placeholder.com/80" alt="User Photo">
+                    <h2>Sanket Gaikwad</h2>
+                    <p>Cultural Explorer | Level 3</p>
+                    <button class="edit-btn">Edit Profile</button>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <h3>12</h3>
+                        <p>Heritage Tours</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>5</h3>
+                        <p>Marketplace Orders</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>8</h3>
+                        <p>Badges Earned</p>
+                    </div>
+                </div>
+                <div class="menu">
+                    <div class="menu-item"><span>📜</span>My Stories</div>
+                    <div class="menu-item"><span>🛒</span>My Orders</div>
+                    <div class="menu-item"><span>🎮</span>My Games</div>
+                    <div class="menu-item"><span>🏆</span>Achievements</div>
+                    <div class="menu-item"><span>🔖</span>Bookmarks</div>
+                </div>
+                <div class="community-card">
+                    <p>Join Cultural Clubs & Communities</p>
+                    <button>Explore Now</button>
+                </div>
+                <button class="logout-btn">Log Out</button>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // --- JAVASCRIPT FOR FESTIVALS PAGE ---
+        function viewFestival(festival){
+            // Redirect to the festival details page (dummy URL for now)
+            alert(`Viewing details for ${festival}!`);
+            // In a real app: window.location.href = festival + ".html";
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Navigation Script
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page-content');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetPageId = link.dataset.page;
+                    navLinks.forEach(navLink => {
+                        navLink.classList.remove('active-nav');
+                        navLink.classList.add('text-gray-500');
+                    });
+                    link.classList.add('active-nav');
+                    link.classList.remove('text-gray-500');
+                    pages.forEach(page => {
+                        page.classList.toggle('hidden', page.id !== `${targetPageId}-page`);
+                    });
+                });
+            });
+
+            // --- JAVASCRIPT FOR GAMES PAGE ---
+            const gameCategoriesData = [
+                { icon: 'fas fa-question-circle', title: 'Quizzes', description: 'Test your knowledge' },
+                { icon: 'fas fa-puzzle-piece', title: 'Puzzle Games', description: 'Jigsaw of monuments' },
+                { icon: 'fas fa-brain', title: 'Memory Match', description: 'Match traditional symbols' }
+            ];
+
+            const featuredGamesData = [
+                { thumbnail: 'https://via.placeholder.com/180x110/FFD700/8B4513?text=Quiz', name: 'Heritage Quiz', difficulty: 'Easy', link: '#' },
+                { thumbnail: 'https://via.placeholder.com/180x110/ADD8E6/1E90FF?text=Jigsaw', name: 'Temple Jigsaw', difficulty: 'Medium', link: '#' },
+                { thumbnail: 'https://via.placeholder.com/180x110/F08080/FF8C00?text=Match', name: 'Symbol Match', difficulty: 'Easy', link: '#' },
+                { thumbnail: 'https://via.placeholder.com/180x110/90EE90/32CD32?text=Trivia', name: 'Dynasty Trivia', difficulty: 'Medium', link: '#' }
+            ];
+
+            const gameCategoriesContainer = document.getElementById('game-categories');
+            const featuredGamesContainer = document.getElementById('featured-games');
+
+            if(gameCategoriesContainer) {
+                gameCategoriesData.forEach(category => {
+                    const card = document.createElement('div');
+                    card.className = 'category-card';
+                    card.innerHTML = `<i class="${category.icon}"></i><h3>${category.title}</h3><p>${category.description}</p>`;
+                    gameCategoriesContainer.appendChild(card);
+                    card.addEventListener('click', () => alert(`Navigating to ${category.title} section!`));
+                });
+            }
+
+            if(featuredGamesContainer) {
+                featuredGamesData.forEach(game => {
+                    const card = document.createElement('div');
+                    card.className = 'game-card';
+                    const tagColor = game.difficulty === 'Easy' ? '#32CD32' : game.difficulty === 'Hard' ? '#FF8C00' : '#1E90FF';
+                    card.innerHTML = `
+                        <img src="${game.thumbnail}" alt="${game.name}">
+                        <div class="game-card-content">
+                            <h4>${game.name}</h4>
+                            <span class="difficulty-tag" style="background-color: ${tagColor};">${game.difficulty}</span>
+                            <button class="play-button" onclick="window.location.href='${game.link}'">Play Now</button>
+                        </div>`;
+                    featuredGamesContainer.appendChild(card);
+                });
+            }
+
+            const heroCtaButton = document.querySelector('#games-page .hero-banner .cta-button');
+            if (heroCtaButton) {
+                heroCtaButton.addEventListener('click', () => {
+                    alert('Time to play some exciting heritage games!');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

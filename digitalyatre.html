@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Yatra - Dharovar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --color-primary: #8B4513;
+            /* Earthy Brown */
+            --color-accent: #E9967A;
+            /* Saffron/Terracotta */
+            --color-bg: #FAF0E6;
+            /* Beige/Linen */
+            --color-text: #363636;
+            --color-light: #FFFFFF;
+            --color-shadow: rgba(0, 0, 0, 0.1);
+            --header-height: 54px;
+        }
+
+        /* --- MOBILE VIEW CONTAINER --- */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .mobile-container {
+            width: 375px;
+            height: 812px;
+            background-color: var(--color-bg);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-main {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .app-main::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* --- APP STYLES --- */
+        /* This class is now used for the sub-header */
+        .sub-header {
+            display: flex;
+            align-items: center;
+            height: var(--header-height);
+            padding: 0 15px;
+            background-color: var(--color-light);
+            box-shadow: 0 2px 5px var(--color-shadow);
+            flex-shrink: 0;
+            z-index: 10;
+        }
+        
+        /* This style now applies to the <a> tag for the back button */
+        .header-btn {
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            color: var(--color-primary);
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            text-align: center; /* Ensures icon is centered in the link area */
+        }
+
+        .header-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin: 0 auto;
+            color: var(--color-primary);
+        }
+
+        .hero-section {
+            position: relative;
+            height: 250px;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=2071&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .hero-text-content {
+            color: var(--color-light);
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-text-content h1 {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+        }
+
+        .hero-text-content p {
+            font-size: 0.9em;
+            margin: 0;
+            max-width: 280px;
+        }
+
+        .content-container {
+            padding: 15px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--color-primary);
+            margin: 0;
+        }
+
+        .view-all-btn {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .tour-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .tour-card {
+            background-color: var(--color-light);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px var(--color-shadow);
+            padding-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .tour-card img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .tour-card-content {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .tour-card h4 {
+            font-size: 0.9em;
+            margin: 0;
+            color: var(--color-primary);
+            white-space: normal;
+            line-height: 1.2;
+            min-height: 2.4em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mobile-container">
+
+        <header class="flex items-center justify-between p-4 bg-white/80 backdrop-blur-sm z-10 border-b border-gray-100 flex-shrink-0">
+            <img src="dharovar-logo.png" alt="Dharovar Logo" class="h-10 w-auto">
+            <div class="flex items-center space-x-4">
+                <a href="#"><svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg></a>
+                <a href="#"><svg class="w-6 h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg></a>
+            </div>
+        </header>
+
+        <div class="sub-header">
+            <a href="dashboard.html" class="header-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1 class="header-title">Digital Yatra</h1>
+        </div>
+
+        <main class="app-main">
+            <section class="hero-section">
+                <div class="hero-text-content">
+                    <h1>Journey Through Time</h1>
+                    <p>Discover India's timeless heritage, one story at a time.</p>
+                </div>
+            </section>
+
+            <div class="content-container">
+                <section>
+                    <div class="section-header">
+                        <h2 class="section-title">Featured Tours</h2>
+                        <a href="#" class="view-all-btn">View All</a>
+                    </div>
+                    <div class="tour-grid" id="tour-grid">
+                    </div>
+                </section>
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toursData = [
+                { name: 'Konark Sun Temple', image: 'https://placehold.co/300x200/B08C6E/fff?text=Konark' },
+                { name: 'Mehrangarh Fort', image: 'https://placehold.co/300x200/7E614B/fff?text=Mehrangarh' },
+                { name: 'Ajanta Caves', image: 'https://placehold.co/300x200/D8A07A/fff?text=Ajanta' },
+                { name: 'Charminar', image: 'https://placehold.co/300x200/D2B48C/fff?text=Charminar' },
+                { name: 'The Taj Mahal', image: 'https://placehold.co/300x200/B08C6E/fff?text=Taj+Mahal' }
+            ];
+
+            const tourGrid = document.getElementById('tour-grid');
+
+            toursData.slice(0, 4).forEach(tour => {
+                const card = document.createElement('div');
+                card.className = 'tour-card';
+                card.innerHTML = `
+                        <img src="${tour.image}" alt="${tour.name}">
+                        <div class="tour-card-content"><h4>${tour.name}</h4></div>
+                    `;
+                tourGrid.appendChild(card);
+                card.addEventListener('click', () => alert(`Exploring ${tour.name}.`));
+            });
+
+            document.querySelector('.view-all-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Navigating to see all tours...');
+            });
+
+        });
+    </script>
+</body>
+
+</html>
