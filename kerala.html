@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kerala Monuments</title>
-    <!-- Model Viewer Component -->
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom styles for model-viewer */
@@ -26,40 +24,51 @@
         <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-4">Famous Monuments in Kerala</h1>
         <p class="text-lg text-gray-600 mb-8">Click on a monument to view its 3D model</p>
 
-        <!-- Button Container -->
-        <div class="btn-container my-6 space-x-4">
+        <div class="btn-container my-6 flex flex-wrap justify-center gap-4">
             <button onclick="showModel('padmanabhaswamy')" class="bg-teal-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-teal-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-teal-300">
                 Shree Padmanabhaswamy Temple
             </button>
-            <button onclick="showMessage('Bekal Fort 3D model is not available yet.')" class="bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-gray-500 transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300">
-                Bekal Fort
+            
+            <button onclick="showModel('vadakkunnathan')" class="bg-teal-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-teal-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-teal-300">
+                Vadakkunnathan Temple
             </button>
+            
+            
         </div>
 
-        <!-- Message/Error Display Area -->
         <div id="message-container" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative my-4 max-w-3xl mx-auto" role="alert">
             <strong class="font-bold">Notice: </strong>
-            <span class="block sm-inline" id="message-text"></span>
+            <span class="block sm:inline" id="message-text"></span>
         </div>
 
-        <!-- 3D Model Viewer Container -->
         <div id="padmanabhaswamy-model" class="model-container hidden flex-col items-center mt-8">
             <h2 class="text-2xl font-semibold mb-4 text-gray-700">Shree Padmanabhaswamy Temple (3D View)</h2>
-            <!-- 
-                DEBUGGING: Temporarily using a valid sample model from the web.
-                If this astronaut model loads, it confirms your setup is correct and 
-                your 'temple.glb' file is the source of the error.
-            -->
             <model-viewer 
-                id="padmanabhaswamy-model"
-                src="models/maharashtra_shaniwar_wada.glb" 
-                alt="A 3D model of an astronaut"
+                id="padmanabhaswamy-viewer"
+                src="models\Sree+Padmanabhaswamy+Temple_kerala.glb" 
+                alt="A 3D model of Shree Padmanabhaswamy Temple"
                 camera-controls 
                 auto-rotate 
                 shadow-intensity="1"
                 exposure="1"
                 ar>
-                <!-- Loading progress bar -->
+                <div class="progress-bar" slot="progress-bar">
+                    <div class="update-bar"></div>
+                </div>
+            </model-viewer>
+        </div>
+        
+        <div id="vadakkunnathan-model" class="model-container hidden flex-col items-center mt-8">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">Vadakkunnathan Temple (3D View)</h2>
+            <model-viewer
+                id="vadakkunnathan-viewer"
+                src="models\Vadakkunnathan+Temple_kerala.glb" 
+                alt="A 3D model of Vadakkunnathan Temple"
+                camera-controls 
+                auto-rotate 
+                shadow-intensity="1"
+                exposure="1"
+                ar>
                 <div class="progress-bar" slot="progress-bar">
                     <div class="update-bar"></div>
                 </div>
@@ -74,8 +83,11 @@
         function showModel(monument) {
             // Hide any previous messages
             messageContainer.classList.add('hidden');
-            // Hide all model containers
-            document.querySelectorAll(".model-container").forEach(el => el.classList.add("hidden"));
+            // Hide all model containers first
+            document.querySelectorAll(".model-container").forEach(el => {
+                el.classList.add("hidden");
+                el.classList.remove("flex");
+            });
             // Show the selected model's container
             const modelElement = document.getElementById(monument + "-model");
             if (modelElement) {
@@ -84,21 +96,24 @@
             }
         }
 
-        // A better way to show messages instead of using alert()
+        // A function to show info/error messages
         function showMessage(msg) {
             messageText.textContent = msg;
             messageContainer.classList.remove('hidden');
-            // Hide any visible models
-            document.querySelectorAll(".model-container").forEach(el => el.classList.add("hidden"));
+            // Hide any visible models when showing a message
+            document.querySelectorAll(".model-container").forEach(el => {
+                 el.classList.add("hidden");
+                 el.classList.remove("flex");
+            });
         }
 
-        const modelViewer = document.getElementById("templeModel");
-        
-        // Listen for errors when loading the model
-        modelViewer.addEventListener("error", (event) => {
-            console.error("Could not load model:", modelViewer.getAttribute("src"), event);
-            // Display a user-friendly error message instead of an alert
-            showMessage(`Could not load the 3D model. The file might be corrupt or not a valid .glb file.`);
+        // CORRECTED & IMPROVED: Attach an error listener to ALL model-viewer elements
+        document.querySelectorAll('model-viewer').forEach(viewer => {
+            viewer.addEventListener('error', (event) => {
+                console.error("Could not load model:", viewer.getAttribute("src"), event);
+                // Display a user-friendly error message
+                showMessage(`Could not load the 3D model from "${viewer.getAttribute('src')}". The file might be corrupt, missing, or not a valid .glb file.`);
+            });
         });
     </script>
 </body>

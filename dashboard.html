@@ -20,15 +20,33 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* UPDATED: Mobile container with phone bezel and notch */
         .mobile-container {
             width: 375px;
             height: 812px;
-            background-color: #f8fafc; /* bg-gray-50 */
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            position: relative;
+            background-color: #f8fafc; /* bg-slate-50 */
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.07);
+            border-radius: 2.5rem;
+            border: 10px solid #1f2937; /* Dark gray border for phone bezel */
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* NEW: Notch at the top of the phone screen */
+        .mobile-container::before {
+            content: '';
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #1f2937; /* Match bezel color */
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            z-index: 20;
         }
 
         .main-content-area {
@@ -43,7 +61,6 @@
         .active-nav {
             color: #2563EB; /* Calming Blue (text-blue-600) */
         }
-
         /* --- CSS FROM PROFILE PAGE --- */
         .profile-card { background: #fff; margin: 20px; border-radius: 15px; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; }
         .profile-card img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; }
@@ -63,9 +80,9 @@
         
         /* --- CSS FROM GAMES PAGE --- */
         #games-page { background-color: #FFFACD; } /* Lemon Chiffon BG */
-        .hero-banner { position: relative; height: 180px; background: linear-gradient(135deg, #FF8C00, #FFD700); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-align: center; padding: 20px; margin-bottom: 15px; }
+        .hero-banner { position: relative; height: 180px; background: linear-gradient(135deg, #c16f34, #FFD700); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-align: center; padding: 20px; margin-bottom: 15px; }
         .hero-banner h2 { font-size: 1.6em; margin: 0 0 15px 0; font-weight: 800; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
-        .hero-banner .cta-button { background-color: #fff; color: #FF8C00; border: none; padding: 12px 30px; border-radius: 50px; font-size: 1.1em; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .hero-banner .cta-button { background-color: #fff; color: #0a40f2; border: none; padding: 12px 30px; border-radius: 50px; font-size: 1.1em; font-weight: bold; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
         .hero-banner .cta-button:active { transform: translateY(2px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
         .games-content-container { padding: 0 15px 80px 15px; }
         .games-section-title { font-size: 1.25em; font-weight: bold; color: #363636; margin: 20px 0 15px 0; padding-left: 5px; }
@@ -83,23 +100,22 @@
         .game-card img { width: 100%; height: 110px; object-fit: cover; display: block; }
         .game-card h4 { font-size: 1em; margin: 5px 0; color: #363636; font-weight: 600; }
         .game-card .difficulty-tag { display: inline-block; color: #fff; font-size: 0.7em; padding: 3px 8px; border-radius: 10px; margin-bottom: 8px; font-weight: bold; }
-        .game-card .play-button { background-color: #FF8C00; color: #fff; border: none; width: 100%; padding: 8px 0; border-radius: 50px; font-size: 0.9em; cursor: pointer; font-weight: bold; transition: background-color 0.2s; }
+        .game-card .play-button { background-color: #c16f34; color: #fff; border: none; width: 100%; padding: 8px 0; border-radius: 50px; font-size: 0.9em; cursor: pointer; font-weight: bold; transition: background-color 0.2s; }
         .progress-rewards { background-color: #fff; border-radius: 15px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); margin-top: 25px; text-align: center; }
-        .progress-rewards p { font-size: 1em; font-weight: 600; color: #FF8C00; margin-bottom: 15px; }
+        .progress-rewards p { font-size: 1em; font-weight: 600; color: #c16f34; margin-bottom: 15px; }
         .badges-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .badge { background-color: #FFFACD; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 1.8em; box-shadow: inset 0 0 5px rgba(0,0,0,0.1); border: 2px solid #32CD32; }
 
         /* --- CSS FROM FESTIVALS PAGE --- */
         #festivals-page { background: #FFF5E6; }
-        .festivals-header { display: flex; justify-content: center; align-items: center; padding: 15px 20px; background: #FF6F00; color: #fff; font-size: 22px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .festivals-header { display: flex; justify-content: center; align-items: center; padding: 15px 20px; background: #c16f34; color: #fff; font-size: 22px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
         .festival-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
-        .festival-card { background: linear-gradient(135deg, #FFD700, #FFA500); color: #fff; border-radius: 20px; padding: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.2); display: flex; flex-direction: column; justify-content: space-between; min-height: 150px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .festival-card { background: linear-gradient(135deg, #FFD700, #c16f34); color: #fff; border-radius: 20px; padding: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.2); display: flex; flex-direction: column; justify-content: space-between; min-height: 150px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
         .festival-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.25); }
         .festival-card h4 { font-size: 16px; font-weight: bold; margin-bottom: 5px; text-shadow: 1px 1px rgba(0,0,0,0.2); }
         .festival-card p { font-size: 12px; line-height: 1.3; flex-grow: 1; text-shadow: 0.5px 0.5px rgba(0,0,0,0.15); }
         .view-btn { background: #008000; color: #fff; border: none; border-radius: 20px; padding: 6px 10px; font-size: 12px; font-weight: bold; margin-top: 10px; cursor: pointer; }
         .view-btn:hover { background: #006400; }
-
     </style>
 </head>
 <body class="bg-gray-200 flex items-center justify-center min-h-screen">
@@ -131,16 +147,14 @@
             <a href="#" data-page="profile" class="nav-link flex flex-col items-center space-y-1 text-gray-500"><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="8" r="3"></circle><path d="M12 14c-2.76 0-5 1.79-5 4h10c0-2.21-2.24-4-5-4z"></path></svg><span class="text-xs font-medium">Profile</span></a>
         </nav>
 
-        <!-- Page Content Area -->
         <div class="main-content-area">
-            <!-- Heritage Page (Visible by default) -->
             <main id="heritage-page" class="page-content">
                 <div class="p-4">
                     <a href="#" class="block bg-amber-700/80 rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow">
                         <h2 class="text-3xl font-bold">Explore Our Community</h2>
                         <p class="mt-1">Discover and Learn diffrent Cultural Activities in our Country</p>
-                        <div class="inline-block mt-4 px-6 py-2 bg-white text-amber-800 font-semibold rounded-full shadow-md">Explore More</div>
-                    </a>
+                            <a href="guru.html"><div class="inline-block mt-4 px-6 py-2 bg-white text-amber-800 font-semibold rounded-full shadow-md"> Explore More</div></a> 
+                        </a>
                 </div>
                 <section>
                     <div class="flex justify-between items-center px-4 py-2">
@@ -172,10 +186,67 @@
                 </section>
             </main>
 
-            <!-- Marketplace Page (Hidden by default) -->
-            <main id="marketplace-page" class="page-content hidden h-full"><div class="flex items-center justify-center h-full"><div class="text-center text-gray-500"><h2 class="text-2xl font-bold">Marketplace</h2><p class="mt-2">Marketplace content will be here soon!</p></div></div></main>
+            <main id="marketplace-page" class="page-content hidden bg-gray-50">
+                <section class="text-center py-6 bg-indigo-50">
+                    <h2 class="text-2xl font-bold text-indigo-700">Support Local Artists</h2>
+                    <p class="text-gray-600 mt-1 text-sm">Buy authentic handmade products</p>
+                </section>
             
-            <!-- Festivals Page (Hidden by default) -->
+                <section class="p-4">
+                    <div class="grid gap-4 grid-cols-2">
+                
+                        <div class="bg-white rounded-xl shadow hover:shadow-lg transition p-3 flex flex-col">
+                            <img src="https://placehold.co/300x200/ffa07a/fff?text=Paithani" alt="Paithani Saree" class="rounded-lg mb-3 w-full h-24 object-cover">
+                            <h3 class="font-semibold text-sm leading-tight">Paithani Saree</h3>
+                            <p class="text-gray-500 text-xs">By Shree Handlooms</p>
+                            <p class="text-indigo-600 font-bold mt-2 text-md">₹12,000</p>
+                            <button class="w-full mt-auto bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 text-sm font-semibold mt-2">Buy Now</button>
+                        </div>
+            
+                        <div class="bg-white rounded-xl shadow hover:shadow-lg transition p-3 flex flex-col">
+                            <img src="https://placehold.co/300x200/20b2aa/fff?text=Kurta" alt="Kurta" class="rounded-lg mb-3 w-full h-24 object-cover">
+                            <h3 class="font-semibold text-sm leading-tight">Traditional Kurta</h3>
+                            <p class="text-gray-500 text-xs">By Desi Weaves</p>
+                            <p class="text-indigo-600 font-bold mt-2 text-md">₹1,800</p>
+                            <button class="w-full mt-auto bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 text-sm font-semibold mt-2">Buy Now</button>
+                        </div>
+            
+                        <div class="bg-white rounded-xl shadow hover:shadow-lg transition p-3 flex flex-col">
+                            <img src="https://placehold.co/300x200/9370db/fff?text=Thushi" alt="Thushi Necklace" class="rounded-lg mb-3 w-full h-24 object-cover">
+                            <h3 class="font-semibold text-sm leading-tight">Thushi Necklace</h3>
+                            <p class="text-gray-500 text-xs">By Kavya Jewels</p>
+                            <p class="text-indigo-600 font-bold mt-2 text-md">₹2,500</p>
+                            <button class="w-full mt-auto bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 text-sm font-semibold mt-2">Buy Now</button>
+                        </div>
+            
+                        <div class="bg-white rounded-xl shadow hover:shadow-lg transition p-3 flex flex-col">
+                            <img src="https://placehold.co/300x200/ffb6c1/fff?text=Rani+Haar" alt="Rani Haar" class="rounded-lg mb-3 w-full h-24 object-cover">
+                            <h3 class="font-semibold text-sm leading-tight">Rani Haar</h3>
+                            <p class="text-gray-500 text-xs">By Royal Jewels</p>
+                            <p class="text-indigo-600 font-bold mt-2 text-md">₹5,000</p>
+                            <button class="w-full mt-auto bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 text-sm font-semibold mt-2">Buy Now</button>
+                        </div>
+            
+                        <div class="bg-white rounded-xl shadow hover:shadow-lg transition p-3 flex flex-col">
+                            <img src="https://placehold.co/300x200/f4a460/fff?text=Chappal" alt="Kolhapuri Chappal" class="rounded-lg mb-3 w-full h-24 object-cover">
+                            <h3 class="font-semibold text-sm leading-tight">Kolhapuri Chappal</h3>
+                            <p class="text-gray-500 text-xs">By Footwear Crafts</p>
+                            <p class="text-indigo-600 font-bold mt-2 text-md">₹900</p>
+                            <button class="w-full mt-auto bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 text-sm font-semibold mt-2">Buy Now</button>
+                        </div>
+            
+                        <div class="bg-white rounded-xl shadow hover:shadow-lg transition p-3 flex flex-col">
+                            <img src="https://placehold.co/300x200/deb887/fff?text=Warli" alt="Warli Painting" class="rounded-lg mb-3 w-full h-24 object-cover">
+                            <h3 class="font-semibold text-sm leading-tight">Warli Painting</h3>
+                            <p class="text-gray-500 text-xs">By Tribal Artists</p>
+                            <p class="text-indigo-600 font-bold mt-2 text-md">₹3,200</p>
+                            <button class="w-full mt-auto bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 text-sm font-semibold mt-2">Buy Now</button>
+                        </div>
+            
+                    </div>
+                </section>
+            </main>
+            
             <main id="festivals-page" class="page-content hidden">
                 <header class="festivals-header">Upcoming Festivals</header>
                 <div class="festival-grid">
@@ -202,7 +273,6 @@
                 </div>
             </main>
 
-            <!-- Games Page (Hidden by default) -->
             <main id="games-page" class="page-content hidden">
                 <section class="hero-banner">
                     <h2>Play & Learn Indian Heritage</h2>
@@ -233,7 +303,6 @@
                 </div>
             </main>
             
-            <!-- Profile Page (Hidden by default) -->
             <main id="profile-page" class="page-content hidden">
                 <div class="profile-card">
                     <img src="https://via.placeholder.com/80" alt="User Photo">

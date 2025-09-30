@@ -34,6 +34,10 @@
             <button onclick="showModel('gateway')" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300">
                 Gateway of India
             </button>
+
+            <button onclick="showModel('flora')" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                Flora Fountain
+            </button>
         </div>
 
         <!-- Message/Error Display Area -->
@@ -63,8 +67,23 @@
             <h2 class="text-2xl font-semibold mb-4 text-gray-700">Gateway of India (3D View)</h2>
             <model-viewer 
                 id="gatewayModel"
-                src="models/gateway.glb" 
+                src="models\gateway+of+india.glb" 
                 alt="3D model of the Gateway of India"
+                camera-controls 
+                auto-rotate 
+                shadow-intensity="1"
+                exposure="1"
+                ar>
+                <div class="progress-bar" slot="progress-bar"></div>
+            </model-viewer>
+        </div>
+
+        <div id="flora-model" class="model-container hidden flex-col items-center mt-8">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">Flora Fountain (3D View)</h2>
+            <model-viewer 
+                id="floraModel"
+                src="models\flora_fountain.glb" 
+                alt="3D model of Flora Fountain"
                 camera-controls 
                 auto-rotate 
                 shadow-intensity="1"

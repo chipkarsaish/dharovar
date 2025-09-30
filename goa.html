@@ -34,6 +34,9 @@
             <button onclick="showModel('fontainhas')" class="bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300">
                 Fontainhas Heritage Walk
             </button>
+            <button onclick="showModel('basilica')" class="bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300">
+                Basilica of Bom Jesus
+            </button>
         </div>
 
         <!-- Message/Error Display Area -->
@@ -65,6 +68,21 @@
                 id="fontainhasModel"
                 src="models\Fontainhas+Heritage+Walk_goa.glb" 
                 alt="3D model of Fontainhas Heritage Walk"
+                camera-controls 
+                auto-rotate 
+                shadow-intensity="1"
+                exposure="1"
+                ar>
+                <div class="progress-bar" slot="progress-bar"></div>
+            </model-viewer>
+        </div>
+
+        <div id="basilica-model" class="model-container hidden flex-col items-center mt-8">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">Basilica of Bom Jesus (3D View)</h2>
+            <model-viewer 
+                id="basilicaModel"
+                src="models\basilica_of_bom_jesus.glb" 
+                alt="3D model of Basilica of Bom Jesus"
                 camera-controls 
                 auto-rotate 
                 shadow-intensity="1"

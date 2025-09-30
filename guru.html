@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guru–Shishya Courses - Dharovar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Styles to create the mobile phone frame */
+        .mobile-container {
+            width: 375px;
+            height: 812px;
+            background-color: #f8fafc; /* bg-slate-50 */
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.07);
+            border-radius: 2.5rem; /* More pronounced rounding */
+            border: 10px solid #1f2937; /* Dark gray border for phone bezel */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Notch at the top of the phone screen */
+        .mobile-container::before {
+            content: '';
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #1f2937; /* Match bezel color */
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            z-index: 20;
+        }
+
+        /* Scrollable content area within the mobile frame */
+        .main-content {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        /* Hide the scrollbar for a cleaner look */
+        .main-content::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-200 flex items-center justify-center min-h-screen p-4">
+
+    <div class="mobile-container">
+
+        <nav class="bg-white/80 backdrop-blur-sm shadow-sm p-4 flex justify-between items-center sticky top-0 z-10 flex-shrink-0">
+            <a href="dashboard.html" class="text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+            </a>
+            <h1 class="text-lg font-bold text-amber-800">Guru–Shishya Learning</h1>
+            <div class="w-6"></div>
+        </nav>
+
+        <main class="main-content bg-slate-50">
+            <section class="text-center py-8 bg-amber-50">
+                <h2 class="text-2xl font-bold text-amber-800">Learn from the Masters</h2>
+                <p class="text-gray-600 mt-2 px-4">Enroll in courses taught by expert artisans</p>
+            </section>
+
+            <section class="p-4">
+                <div class="grid grid-cols-1 gap-5">
+
+                    <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
+                        <img src="https://placehold.co/375x200/ffa07a/fff?text=Paithani+Weaving" alt="Paithani Saree" class="w-full h-40 object-cover">
+                        <div class="p-4 flex flex-col flex-grow">
+                            <h3 class="font-semibold text-lg">Paithani Saree Weaving</h3>
+                            <p class="text-gray-600 text-sm mt-1">Master the traditional art of Paithani weaving.</p>
+                            <div class="flex justify-between items-center mt-auto pt-4">
+                                <p class="text-amber-700 font-bold text-lg">₹1,999</p>
+                                <button class="bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-700 transition">View Course</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
+                        <img src="https://placehold.co/375x200/9370db/fff?text=Thushi+Jewellery" alt="Thushi Jewellery" class="w-full h-40 object-cover">
+                        <div class="p-4 flex flex-col flex-grow">
+                            <h3 class="font-semibold text-lg">Thushi Jewellery Making</h3>
+                            <p class="text-gray-600 text-sm mt-1">Learn the intricate techniques of crafting Thushi beads.</p>
+                            <div class="flex justify-between items-center mt-auto pt-4">
+                                <p class="text-amber-700 font-bold text-lg">₹1,499</p>
+                                <button class="bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-700 transition">View Course</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
+                        <img src="https://placehold.co/375x200/ffb6c1/fff?text=Rani+Haar" alt="Rani Haar Necklace" class="w-full h-40 object-cover">
+                        <div class="p-4 flex flex-col flex-grow">
+                            <h3 class="font-semibold text-lg">Rani Haar Crafting</h3>
+                            <p class="text-gray-600 text-sm mt-1">Create elegant and royal Rani Haar jewellery pieces.</p>
+                            <div class="flex justify-between items-center mt-auto pt-4">
+                                <p class="text-amber-700 font-bold text-lg">₹1,799</p>
+                                <button class="bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-700 transition">View Course</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
+                        <img src="https://placehold.co/375x200/f4a460/fff?text=Kolhapuri+Chappal" alt="Kolhapuri Chappal" class="w-full h-40 object-cover">
+                        <div class="p-4 flex flex-col flex-grow">
+                            <h3 class="font-semibold text-lg">Kolhapuri Chappal Making</h3>
+                            <p class="text-gray-600 text-sm mt-1">Learn the authentic craftsmanship behind leather chappals.</p>
+                            <div class="flex justify-between items-center mt-auto pt-4">
+                                <p class="text-amber-700 font-bold text-lg">₹1,299</p>
+                                <button class="bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-700 transition">View Course</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Karnataka Monuments</title>
+    <!-- Model Viewer Component -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for model-viewer */
+        model-viewer {
+            width: 90%;
+            max-width: 800px;
+            height: 60vh;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem; /* rounded-xl */
+            background-color: #f8f9fa; /* A light background for the viewer */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div class="container mx-auto p-4 md:p-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-red-700 mb-4">
+            Famous Monuments in Karnataka
+        </h1>
+        <p class="text-lg text-gray-600 mb-8">Click on a monument to view its 3D model</p>
+
+        <!-- Button Container -->
+        <div class="btn-container my-6 space-x-4">
+            <button
+                onclick="showModel('aguada')"
+                class="bg-red-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-red-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-300"
+            >
+                Stone Chariots of Hampi
+            </button>
+            <button
+                onclick="showModel('mysore')"
+                class="bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300"
+            >
+                Mysore Palace
+            </button>
+            <button
+                onclick="showModel('golgumbaz')"
+                class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300"
+            >
+                Gol Gumbaz
+            </button>
+        </div>
+
+        <!-- Message/Error Display Area -->
+        <div
+            id="message-container"
+            class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative my-4 max-w-3xl mx-auto"
+            role="alert"
+        >
+            <strong class="font-bold">Notice: </strong>
+            <span class="block sm:inline" id="message-text"></span>
+        </div>
+
+        <!-- Fort Aguada 3D Model Viewer Container -->
+        <div
+            id="aguada-model"
+            class="model-container hidden flex-col items-center mt-8"
+        >
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">
+                Stone Chariots of Hampi
+            </h2>
+            <model-viewer
+                id="aguadaModel"
+                src="models\Hampi.glb"
+                alt="3D model of Stone Chariots of Hampi"
+                camera-controls
+                auto-rotate
+                shadow-intensity="1"
+                exposure="1"
+                ar
+            >
+                <div class="progress-bar" slot="progress-bar"></div>
+            </model-viewer>
+        </div>
+
+        <!-- Mysore Palace 3D Model Viewer Container -->
+        <div
+            id="mysore-model"
+            class="model-container hidden flex-col items-center mt-8"
+        >
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">
+                Mysore Palace
+            </h2>
+            <model-viewer
+                id="mysoreModel"
+                src="models\mattancherry_palace_kochi.glb"
+                alt="3D model of Mysore Palace"
+                camera-controls
+                auto-rotate
+                shadow-intensity="1"
+                exposure="1"
+                ar
+            >
+                <div class="progress-bar" slot="progress-bar"></div>
+            </model-viewer>
+        </div>
+
+        <!-- Gol Gumbaz 3D Model Viewer Container -->
+        <div
+            id="golgumbaz-model"
+            class="model-container hidden flex-col items-center mt-8"
+        >
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">
+                Gol Gumbaz
+            </h2>
+            <model-viewer
+                id="golgumbazModel"
+                src="models\gol_gumbaaz_karnataka.glb"
+                alt="3D model of Gol Gumbaz"
+                camera-controls
+                auto-rotate
+                shadow-intensity="1"
+                exposure="1"
+                ar
+            >
+                <div class="progress-bar" slot="progress-bar"></div>
+            </model-viewer>
+        </div>
+    </div>
+
+    <script>
+        const messageContainer = document.getElementById("message-container");
+        const messageText = document.getElementById("message-text");
+
+        function showModel(monument) {
+            messageContainer.classList.add("hidden");
+            document
+                .querySelectorAll(".model-container")
+                .forEach((el) => el.classList.add("hidden"));
+            const modelElement = document.getElementById(monument + "-model");
+            if (modelElement) {
+                modelElement.classList.remove("hidden");
+                modelElement.classList.add("flex");
+            } else {
+                showMessage(`Model container for "${monument}" not found.`);
+            }
+        }
+
+        function showMessage(msg) {
+            messageText.textContent = msg;
+            messageContainer.classList.remove("hidden");
+            document
+                .querySelectorAll(".model-container")
+                .forEach((el) => el.classList.add("hidden"));
+        }
+
+        // Setup error listeners for all model-viewer elements
+        document.querySelectorAll("model-viewer").forEach((modelViewer) => {
+            modelViewer.addEventListener("error", (event) => {
+                console.error(
+                    "Could not load model:",
+                    modelViewer.getAttribute("src"),
+                    event
+                );
+                showMessage(
+                    `Could not load the 3D model: ${modelViewer.getAttribute(
+                        "src"
+                    )}. The file might be corrupt or missing.`
+                );
+            });
+        });
+    </script>
+</body>
+</html>

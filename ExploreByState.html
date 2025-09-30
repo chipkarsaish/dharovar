@@ -14,9 +14,43 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* Styles to create the mobile phone frame */
+        .mobile-container {
+            width: 375px;
+            height: 812px;
+            background-color: #f8fafc; /* bg-slate-50 */
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.07);
+            border-radius: 2.5rem;
+            border: 10px solid #1f2937; /* Dark gray border for phone bezel */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Notch at the top of the phone screen */
+        .mobile-container::before {
+            content: '';
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #1f2937; /* Match bezel color */
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            z-index: 20;
+        }
+        
+        /* Updated to use flexbox for better scrolling */
         .main-content-area {
-            height: calc(100vh - 80px);
-            /* Adjusted for header without nav */
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .main-content-area::-webkit-scrollbar {
+            display: none;
         }
 
         /* Style for the favorited heart icon */
@@ -84,7 +118,7 @@
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <!-- Karnataka Card -->
-                            <a href="#" class="block group">
+                            <a href="karnataka.html" class="block group">
                                 <div class="relative">
                                     <img src="https://placehold.co/200x200/228b22/ffffff?text=Karnataka" alt="Karnataka"
                                         class="w-full h-32 object-cover rounded-xl shadow">
@@ -144,6 +178,7 @@
                                 <p class="text-sm text-gray-600">Portuguese Heritage</p>
                             </a>
                             <!-- Maharashtra Card -->
+                            <!-- Maharashtra Card -->
                             <a href="maharashtra.html" class="block group">
                                 <div class="relative">
                                     <img src="https://placehold.co/200x200/ffdab9/8b4513?text=Maharashtra"
@@ -160,86 +195,87 @@
                                         </svg>
                                     </div>
                                 </div>
+                                <h4 class="font-bold text-gray-900 mt-2">Maharashtra</h4>
+                                <p class="text-sm text-gray-600">Temple Architecture</p>
                             </a>
 
                         </div>
-                        <h4 class="font-bold text-gray-900 mt-2">Maharashtra</h4>
-                        <p class="text-sm text-gray-600">Temple Architecture</p>
-                        </a>
-                </div>
-                </section>
+                    </section>
 
-                <!-- Explore Categories Section -->
-                <section class="mt-6">
-                    <div class="flex justify-between items-center mb-3">
-                        <h3 class="text-lg font-bold text-gray-800">Explore Categories</h3>
-                        <a href="#" class="text-gray-600">
+                    <!-- Explore Categories Section -->
+                    <section class="mt-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-lg font-bold text-gray-800">Explore Categories</h3>
+                            <a href="#" class="text-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="w-5 h-5">
+                                    <line x1="4" y1="21" x2="4" y2="14"></line>
+                                    <line x1="4" y1="10" x2="4" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="12"></line>
+                                    <line x1="12" y1="8" x2="12" y2="3"></line>
+                                    <line x1="20" y1="21" x2="20" y2="16"></line>
+                                    <line x1="20" y1="12" x2="20" y2="3"></line>
+                                    <line x1="1" y1="14" x2="7" y2="14"></line>
+                                    <line x1="9" y1="8" x2="15" y2="8"></line>
+                                    <line x1="17" y1="16" x2="23" y2="16"></line>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <a href="#"
+                                class="flex flex-col items-center justify-center space-y-2 bg-indigo-200 text-indigo-800 p-4 rounded-xl text-center">
+                                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M2 21h20M7 21V7l5-5 5 5v14M12 7v14" />
+                                </svg>
+                                <h4 class="font-bold text-sm">Monument</h4>
+                            </a>
+                            <a href="#"
+                                class="flex flex-col items-center justify-center space-y-2 bg-teal-200 text-teal-800 p-4 rounded-xl text-center">
+                                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3z" />
+                                </svg>
+                                <h4 class="font-bold text-sm">Cuisine</h4>
+                            </a>
+                            <a href="#"
+                                class="flex flex-col items-center justify-center space-y-2 bg-orange-200 text-orange-800 p-4 rounded-xl text-center">
+                                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M9 18V5l12-2v13M9 18a4.5 4.5 0 0 0-4.5 2.5A4.5 4.5 0 0 0 9 18zM12 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                </svg>
+                                <h4 class="font-bold text-sm">Folk Arts</h4>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Nearby Sites Section -->
+                    <section class="mt-6 bg-white p-4 rounded-xl shadow-sm flex items-center space-x-4">
+                        <div class="bg-indigo-100 p-3 rounded-full">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="w-5 h-5">
-                                <line x1="4" y1="21" x2="4" y2="14"></line>
-                                <line x1="4" y1="10" x2="4" y2="3"></line>
-                                <line x1="12" y1="21" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12" y2="3"></line>
-                                <line x1="20" y1="21" x2="20" y2="16"></line>
-                                <line x1="20" y1="12" x2="20" y2="3"></line>
-                                <line x1="1" y1="14" x2="7" y2="14"></line>
-                                <line x1="9" y1="8" x2="15" y2="8"></line>
-                                <line x1="17" y1="16" x2="23" y2="16"></line>
+                                stroke-linejoin="round" class="w-6 h-6 text-indigo-600">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="3"></circle>
                             </svg>
-                        </a>
-                    </div>
-                    <div class="grid grid-cols-3 gap-3">
-                        <a href="#"
-                            class="flex flex-col items-center justify-center space-y-2 bg-indigo-200 text-indigo-800 p-4 rounded-xl text-center">
-                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M2 21h20M7 21V7l5-5 5 5v14M12 7v14" />
-                            </svg>
-                            <h4 class="font-bold text-sm">Monument</h4>
-                        </a>
-                        <a href="#"
-                            class="flex flex-col items-center justify-center space-y-2 bg-teal-200 text-teal-800 p-4 rounded-xl text-center">
-                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path
-                                    d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3z" />
-                            </svg>
-                            <h4 class="font-bold text-sm">Cuisine</h4>
-                        </a>
-                        <a href="#"
-                            class="flex flex-col items-center justify-center space-y-2 bg-orange-200 text-orange-800 p-4 rounded-xl text-center">
-                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path
-                                    d="M9 18V5l12-2v13M9 18a4.5 4.5 0 0 0-4.5 2.5A4.5 4.5 0 0 0 9 18zM12 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                            </svg>
-                            <h4 class="font-bold text-sm">Folk Arts</h4>
-                        </a>
-                    </div>
-                </section>
-
-                <!-- Nearby Sites Section -->
-                <section class="mt-6 bg-white p-4 rounded-xl shadow-sm flex items-center space-x-4">
-                    <div class="bg-indigo-100 p-3 rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="w-6 h-6 text-indigo-600">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-gray-900">Nearby Heritage Sites</h4>
-                        <p class="text-sm text-gray-600">Discover sites near your location</p>
-                        <a href="#"
-                            class="mt-2 inline-block px-5 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">Find
-                            Near Me</a>
-                    </div>
-                </section>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Nearby Heritage Sites</h4>
+                            <p class="text-sm text-gray-600">Discover sites near your location</p>
+                            <a href="#"
+                                class="mt-2 inline-block px-5 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">Find
+                                Near Me</a>
+                        </div>
+                    </section>
+                </div>
+            </main>
         </div>
-        </main>
-    </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
